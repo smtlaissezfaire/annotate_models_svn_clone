@@ -1,6 +1,6 @@
 require "config/environment"
 
-MODEL_DIR = File.join(File.dirname(__FILE__), "../../../../app/models")
+MODEL_DIR = File.join(RAILS_ROOT, "app/models")
 
 module AnnotateModels
 
@@ -56,6 +56,7 @@ module AnnotateModels
   def self.get_model_names
     models = ARGV.dup
     models.shift
+    
     if models.empty?
       Dir.chdir(MODEL_DIR) do 
         models = Dir["*.rb"]
@@ -77,7 +78,8 @@ module AnnotateModels
     end
     
     self.get_model_names.each do |m|
-      class_name = m.sub(/\.rb$/, '').camelize.singularize
+      p m
+      class_name = Inflector.classify(m.sub(/\.rb$/, ''))
       klass = Object.const_get(class_name) rescue nil
       if klass && klass < ActiveRecord::Base
         puts "Annotating #{class_name}"
