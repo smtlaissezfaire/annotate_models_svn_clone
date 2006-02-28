@@ -18,3 +18,13 @@ of each ActiveRecord model source file:
   
     . . .
   
+Does not cope with models in sub-directories of app/models.
+
+Author:
+   Dave Thomas
+   Pragmatic Programmers, LLC
+   
+Released under the same license as Ruby. No Support. No Warranty.
+
+Back up your model files before using...
+
