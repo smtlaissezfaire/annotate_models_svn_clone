@@ -1,6 +1,7 @@
 require "config/environment"
 
-MODEL_DIR = File.join(RAILS_ROOT, "app/models")
+MODEL_DIR   = File.join(RAILS_ROOT, "app/models")
+FIXTURE_DIR = File.join(RAILS_ROOT, "test/fixtures")
 
 module AnnotateModels
 
@@ -26,26 +27,35 @@ module AnnotateModels
     info << "#\n\n"
   end
 
-  # Given the name of an ActiveRecord class, create a schema
-  # info block (basically a comment containing information
-  # on the columns and their types) and put it at the front
-  # of the corresponding source file. If the file already
-  # contains a schema info block (a comment starting
+  # Add a schema block to a file. If the file already contains
+  # a schema info block (a comment starting
   # with "Schema as of ..."), remove it first.
 
-  def self.annotate(klass, header)
-    info = get_schema_info(klass, header)
-    source_file_name = klass.name.underscore + ".rb"
-
-    Dir.chdir(MODEL_DIR) do 
-      content = File.read(source_file_name)
+  def self.annotate_one_file(file_name, info_block)
+    if File.exist?(file_name)
+      content = File.read(file_name)
 
       # Remove old schema info
       content.sub!(/^# #{PREFIX}.*?\n(#.*\n)*\n/, '')
 
       # Write it back
-      File.open(source_file_name, "w") { |f| f.puts info + content }
-    end 
+      File.open(file_name, "w") { |f| f.puts info + content }
+    end
+  end
+  
+  # Given the name of an ActiveRecord class, create a schema
+  # info block (basically a comment containing information
+  # on the columns and their types) and put it at the front
+  # of the model and fixture source files.
+
+  def self.annotate(klass, header)
+    info = get_schema_info(klass, header)
+    
+    model_file_name = File.join(MODEL_DIR, klass.name.underscore + ".rb")
+    annotate_one_file(model_file_name, info)
+
+    fixture_file_name = File.join(FIXTURE_DIR, klass.table_name + ".yml")
+    annotate_one_file(fixture_file_name, info)
   end
 
   # Return a list of the model files to annotate. If we have 
