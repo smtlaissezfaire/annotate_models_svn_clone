@@ -88,7 +88,6 @@ module AnnotateModels
     end
     
     self.get_model_names.each do |m|
-      p m
       class_name = Inflector.classify(m.sub(/\.rb$/, ''))
       klass = Object.const_get(class_name) rescue nil
       if klass && klass < ActiveRecord::Base
