@@ -39,7 +39,7 @@ module AnnotateModels
       content.sub!(/^# #{PREFIX}.*?\n(#.*\n)*\n/, '')
 
       # Write it back
-      File.open(file_name, "w") { |f| f.puts info + content }
+      File.open(file_name, "w") { |f| f.puts info_block + content }
     end
   end
   
