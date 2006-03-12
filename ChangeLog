@@ -1,1 +1,6 @@
+2006-03-11  Dave Thomas  <dave@pragprog.com>
+
+	* lib/annotate_models.rb: Use camelize, not classify, to construct
+	  class names (Grant Hollingworth)
+
 3/3/06   Now annotates fixture files too (thanks to Josha Susser)
