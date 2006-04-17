@@ -69,7 +69,7 @@ module AnnotateModels
     
     if models.empty?
       Dir.chdir(MODEL_DIR) do 
-        models = Dir["*.rb"]
+        models = Dir["**/*.rb"]
       end
     end
     models
@@ -88,8 +88,8 @@ module AnnotateModels
     end
     
     self.get_model_names.each do |m|
-      class_name = Inflector.camelize(m.sub(/\.rb$/, ''))
-      klass = Object.const_get(class_name) rescue nil
+      class_name = m.sub(/\.rb$/,'').camelize
+      klass = class_name.split('::').inject(Object){ |klass,part| klass.const_get(part) } rescue nil 
       if klass && klass < ActiveRecord::Base
         puts "Annotating #{class_name}"
         self.annotate(klass, header)
