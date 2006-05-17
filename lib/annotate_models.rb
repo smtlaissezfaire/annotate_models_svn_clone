@@ -13,6 +13,7 @@ module AnnotateModels
   # the type (and length), and any optional attributes
   def self.get_schema_info(klass, header)
     info = "# #{header}\n#\n"
+    max_size = klass.column_names.collect{|name| name.size}.max + 1
     klass.columns.each do |col|
       attrs = []
       attrs << "default(#{col.default})" if col.default
@@ -21,7 +22,7 @@ module AnnotateModels
       col_type = col.type.to_s
       col_type << "(#{col.limit})" if col.limit
 
-      info << sprintf("#  %-20.20s:%-13.13s %s\n", col.name, col_type, attrs.join(", "))
+      info << sprintf("#  %-#{max_size}.#{max_size}s:%-13.13s %s\n", col.name, col_type, attrs.join(", "))
     end
 
     info << "#\n\n"
