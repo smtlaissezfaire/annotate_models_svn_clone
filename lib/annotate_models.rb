@@ -13,11 +13,14 @@ module AnnotateModels
   # the type (and length), and any optional attributes
   def self.get_schema_info(klass, header)
     info = "# #{header}\n#\n"
+    info << "# Table name: #{klass.table_name}\n#\n"
+    
     max_size = klass.column_names.collect{|name| name.size}.max + 1
     klass.columns.each do |col|
       attrs = []
       attrs << "default(#{col.default})" if col.default
       attrs << "not null" unless col.null
+      attrs << "primary key" if col.name == klass.primary_key
 
       col_type = col.type.to_s
       col_type << "(#{col.limit})" if col.limit
@@ -82,7 +85,7 @@ module AnnotateModels
   # then pas it to the associated block
 
   def self.do_annotations
-    header = PREFIX + Time.now.to_s
+    header = PREFIX + Time.now.to_s(:long)
     version = ActiveRecord::Migrator.current_version
     if version > 0
       header << " (schema version #{version})"
