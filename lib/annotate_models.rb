@@ -5,7 +5,7 @@ FIXTURE_DIR = File.join(RAILS_ROOT, "test/fixtures")
 
 module AnnotateModels
 
-  PREFIX = "Schema as of "
+  PREFIX = "== Schema Information"
 
   # Use the column information in an ActiveRecord class
   # to create a comment block containing a line for
@@ -85,10 +85,10 @@ module AnnotateModels
   # then pas it to the associated block
 
   def self.do_annotations
-    header = PREFIX + Time.now.to_s(:long)
+    header = PREFIX.dup
     version = ActiveRecord::Migrator.current_version
     if version > 0
-      header << " (schema version #{version})"
+      header << "\n# Schema version: #{version}"
     end
     
     self.get_model_names.each do |m|

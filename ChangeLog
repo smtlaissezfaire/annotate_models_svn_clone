@@ -1,3 +1,14 @@
+2006-06-13: Dave Thomas <dave@pragprog.com>
+  * Fix bug where we corrupted the PREFIX string and therefore duplicated
+    the header
+  * No longer include the datetime, so we don't trigger a commit
+    back into repos
+    
+    -- NOTE -- just this once, you'll get a duplicate header after you run
+    a_m on an already-annotated model. Sorry.... Dave
+    
+    
+    
 2006-06-11  Dave Thomas  <dave@pragprog.com>
   * lib/annotate_models.rb: At Kian Wright's suggestion, document the table
     name and primary key. Also make the timestamp prettier
