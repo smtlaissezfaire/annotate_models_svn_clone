@@ -1,3 +1,6 @@
+2006-07-13: Wes Gamble
+  * Don't annotate abstract models
+  
 2006-06-13: Dave Thomas <dave@pragprog.com>
   * Fix bug where we corrupted the PREFIX string and therefore duplicated
     the header
