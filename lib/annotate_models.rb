@@ -23,8 +23,11 @@ module AnnotateModels
       attrs << "primary key" if col.name == klass.primary_key
 
       col_type = col.type.to_s
-      col_type << "(#{col.limit})" if col.limit
-
+      if col_type == "decimal"
+        col_type << "(#{col.precision}, #{col.scale})"
+      else
+        col_type << "(#{col.limit})" if col.limit
+      end 
       info << sprintf("#  %-#{max_size}.#{max_size}s:%-13.13s %s\n", col.name, col_type, attrs.join(", "))
     end
 

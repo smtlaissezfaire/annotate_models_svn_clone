@@ -1,3 +1,6 @@
+2006-07-13: Dave Thomas <dave@pragprog.com>
+   * Support :scale for decimal columns
+   
 2006-07-13: Wes Gamble
   * Don't annotate abstract models
   
