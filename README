@@ -13,12 +13,13 @@ of each ActiveRecord model source file:
   #  order_id            :integer(11)   
   #
 
-  class LineItem < ActiveRecord::Base
-    belongs_to :product
+  class LineItem < ActiveRecord::Base belongs_to :product
   
-    . . .
+   . . .
   
-Does not cope with models in sub-directories of app/models.
+Note that this code will blow away the initial comment block in your models if it looks ike it was
+previously added by annotate models, so you don't want to add additional text to an automatically
+created comment block.
 
 Author:
    Dave Thomas

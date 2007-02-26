@@ -99,7 +99,7 @@ module AnnotateModels
       klass = class_name.split('::').inject(Object){ |klass,part| klass.const_get(part) } rescue nil 
       if klass && klass < ActiveRecord::Base && ! klass.abstract_class?
         puts "Annotating #{class_name}"
-        self.annotate(klass, header)
+        self.annotate(klass, header) rescue "Unable to annotate #{class_name}--#{$!}"
       else
         puts "Skipping #{class_name}"
       end
