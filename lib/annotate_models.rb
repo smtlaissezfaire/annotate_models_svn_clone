@@ -6,6 +6,20 @@ FIXTURE_DIR = File.join(RAILS_ROOT, "test/fixtures")
 module AnnotateModels
 
   PREFIX = "== Schema Information"
+  
+  # Simple quoting for the default column value
+  def quote(value)
+    case value
+      when NilClass                 then "NULL"
+      when TrueClass                then "TRUE"
+      when FalseClass               then "FALSE"
+      when Float, Fixnum, Bignum    then value.to_s
+      # BigDecimals need to be output in a non-normalized form and quoted.
+      when BigDecimal               then value.to_s('F')
+      else
+        value.inspect
+    end
+  end
 
   # Use the column information in an ActiveRecord class
   # to create a comment block containing a line for
