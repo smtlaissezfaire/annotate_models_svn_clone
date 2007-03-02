@@ -1,3 +1,6 @@
+2007-03-02: Dave Thomas <dave@pragprog.com>
+   * Allow non-printing characters in column defaults (suggested by Ben Booth)
+
 2007-02-28: Dave Thomas <dave@pragprog.com>
    * Report errors loading model classes better. Change suggested by Niels Knacke
    
