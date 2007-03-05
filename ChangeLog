@@ -1,3 +1,6 @@
+2007-03-05: Dave Thomas <dave@pragprog.com>
+   * Forgot to call the quote method
+   
 2007-03-02: Dave Thomas <dave@pragprog.com>
    * Allow non-printing characters in column defaults (suggested by Ben Booth)
 
