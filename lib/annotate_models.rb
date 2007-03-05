@@ -8,7 +8,7 @@ module AnnotateModels
   PREFIX = "== Schema Information"
   
   # Simple quoting for the default column value
-  def quote(value)
+  def self.quote(value)
     case value
       when NilClass                 then "NULL"
       when TrueClass                then "TRUE"
