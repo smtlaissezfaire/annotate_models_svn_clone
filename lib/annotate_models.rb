@@ -2,6 +2,8 @@ require "config/environment"
 
 MODEL_DIR   = File.join(RAILS_ROOT, "app/models")
 FIXTURE_DIR = File.join(RAILS_ROOT, "test/fixtures")
+RSPEC_DIR   = File.join(RAILS_ROOT, "spec/models")
+RSPEC_FIXTURES = File.join(RAILS_ROOT, "spec/fixtures")
 
 module AnnotateModels
 
@@ -74,6 +76,14 @@ module AnnotateModels
     
     model_file_name = File.join(MODEL_DIR, klass.name.underscore + ".rb")
     annotate_one_file(model_file_name, info)
+    
+    if File.join(RAILS_ROOT, "spec")
+      rspec_file_name = File.join(RSPEC_DIR, klass.name.underscore + "_spec.rb")
+      annotate_one_file(rspec_file_name, info)
+      
+      rspec_fixture = File.join(RSPEC_FIXTURES, klass.table_name + ".yml")
+      annotate_one_file(rspec_fixture, info)
+    end
 
     Dir.glob(File.join(FIXTURE_DIR, "**", klass.table_name + ".yml")) do | fixture_file_name |
       annotate_one_file(fixture_file_name, info)
