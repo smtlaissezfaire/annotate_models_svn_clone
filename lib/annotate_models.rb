@@ -75,8 +75,9 @@ module AnnotateModels
     model_file_name = File.join(MODEL_DIR, klass.name.underscore + ".rb")
     annotate_one_file(model_file_name, info)
 
-    fixture_file_name = File.join(FIXTURE_DIR, klass.table_name + ".yml")
-    annotate_one_file(fixture_file_name, info)
+    Dir.glob(File.join(FIXTURE_DIR, "**", klass.table_name + ".yml")) do | fixture_file_name |
+      annotate_one_file(fixture_file_name, info)
+    end
   end
 
   # Return a list of the model files to annotate. If we have 
